@@ -55,7 +55,7 @@ Ziel dieses Sprints ist die fachliche Vervollständigung der Reiseauskunft. Der 
 
 ---
 
-## Liste der Testfälle für die Abnahme (Fokus U1)
+## Liste der Testfälle für die Abnahme
 
 | Nr. | Eingabe-Typ | Benutzereingabe | Erwartete Ausgabe / Reaktion | Logik-Prüfung |
 | :--- | :--- | :--- | :--- | :--- |
