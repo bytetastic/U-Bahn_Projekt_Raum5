@@ -74,6 +74,8 @@ Ziel dieses Sprints ist die fachliche Vervollständigung der Reiseauskunft. Der 
 
 Erläuterung zu Testfall 10 & 12:
 
+    Testfall 8: Hier ist vor und nach Gostenhof ein Leerzeichen: ' Gostenhof '     
+
     Testfall 10: Da die Eingabe exakt "Hauptbahnhof" lautet, muss das System diesen auch wählen und nicht den "Fürth Hauptbahnhof", da hier ein 100% Match vorliegt.
 
     Testfall 12: Da die U2/U3 noch nicht implementiert sind, muss das System den "Flughafen" als unbekannt ablehnen, um die Integrität der U1-Reiseplanung zu wahren.
