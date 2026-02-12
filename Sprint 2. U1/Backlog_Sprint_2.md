@@ -5,14 +5,16 @@
 Wir erweitern das System auf die reale **Linie U1**. 
 Im Fokus stehen die Implementierung von **Hin- und Rückfahrt** sowie **variabler Haltezeiten**.
  
-### User-Stories 2.1: Fahrgast
+### User-Story 2.1: Fahrgast
  
-> "Als Fahrgast benötige ich Zeit zum Ein- und Aussteigen, deshalb muss die Bahn ein wenig an jeder Station verweilen."
-> 
-> "Ich möchte nicht nur in eine Richtung fahren können, sondern auch zurück."
+"Als Fahrgast benötige ich Zeit zum Ein- und Aussteigen, deshalb muss die Bahn ein wenig an jeder Station verweilen."
+
+### User-Story 2.2: Fahrgast
+
+"Ich möchte nicht nur in eine Richtung fahren können, sondern auch zurück."
  
  
-### User-Story: Verkehrsbetrieb (Kunde)
+### User-Story 2.3: Verkehrsbetrieb (Kunde)
  
 "Mit Blick auf die reale Anwendung möchten wir die Logik der Teststrecke auf die Struktur der Linie U1 übertragen."
  
@@ -54,7 +56,7 @@ Im Fokus stehen die Implementierung von **Hin- und Rückfahrt** sowie **variable
   * Berechnung der Ankunfts- und Abfahrtszeiten erfolgt unter **striktem Einbezug der Haltezeiten**.
   * Es können Informationen zu Fahrten in beide Richtungen abgefragt werden.
  
-1. **Ausgabe:** Anzeige der nächsten tatsächlichen Abfahrtszeit.
+4. **Ausgabe:** Anzeige der nächsten tatsächlichen Abfahrtszeit.
  
   * Genauigkeit: Auf die Minute gerundet.
 
