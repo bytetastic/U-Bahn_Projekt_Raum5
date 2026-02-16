@@ -1,5 +1,7 @@
 # 25FIDP_U-Bahn_Projekt_Teil_2_OOP
-## Fortsetzung des Projekts  25FIDP_Kurzstrecke
+*Fortsetzung des Projekts  25FIDP_Kurzstrecke*
+
+Ziel dieses Lernprojekts ist die Erstellung eines U-Bahn-Fahrgastinformationssystems in Python mit OOP sowie seine Erweiterung. System und Features werden von Sprint zu Sprint erweitert, wobei die Entwickler bei der Erstellung letzterer mehr und mehr miteinbezogen werden. 
 
 Dateien im Hauptverzeichnis:
 
