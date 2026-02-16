@@ -1,19 +1,21 @@
 # 25FIDP_U-Bahn_Projekt_Teil_2_OOP
 *Fortsetzung des Projekts  25FIDP_Kurzstrecke*
 
-Ziel dieses Lernprojekts ist die Erstellung eines U-Bahn-Fahrgastinformationssystems in Python durch OOP. Anforderungen an das System werden von Sprint zu Sprint von den Product Ownern ausgearbeitet und den Developern als Backlog zur Umsetzung vorgelegt. Die Developer werden in diesen Prozess mehr und mehr miteinbezogen. 
+Ziel dieses Lernprojekts ist die Erstellung eines U-Bahn-Fahrgastinformationssystems in Python durch OOP. Anforderungen an das System werden von Sprint zu Sprint von den Product Ownern ausgearbeitet und den Developerteams als Backlog zur Umsetzung vorgelegt. Die Developer modellieren und programmieren dementsprechend und werden in den Prozess der Sprinterstellung mehr und mehr miteinbezogen. 
 
 Dateien im Hauptverzeichnis:
 
->    Backlog_gesamt_....md    enthält alle Userstories, die bis jetzt angedacht sind
+>    Abnahmeprotokoll für Sprint und Gruppen.xlsx: Vorlage für die Abnahmeprotokolle, die vor Abschluss der Sprints für jede Gruppe ausgefüllt werden.
+>
+>    *Backlog_gesamt_....md:*    enthält alle Userstories, die bis jetzt angedacht sind
 > 
->    GitHub_cheat_sheet.md       enthält Tipps für die Arbeit mit GitHub
+>    *GitHub_cheat_sheet.md:*       enthält Tipps für die Arbeit mit GitHub
 > 
->    Sprintplan.md             enthält den Zeitplan für die einzelnen Sprints
+>    *Sprintplan.md:*             enthält den Zeitplan für die einzelnen Sprints
 > 
->    U-Bahn Haltestellen und Fahrtzeiten.xlsx    enthält eineExcel-Tabelle, mit dem man die Fahrtdaten schnell berechnet werden können
+>    *U-Bahn Haltestellen und Fahrtzeiten.xlsx:*    enthält eineExcel-Tabelle, mit dem man die Fahrtdaten schnell berechnet werden können
 > 
->    u_bahn_netz_v1.png      enthält den Netzplan
+>    *u_bahn_netz_v1.png:      enthält den Netzplan*
 
 Die Unterordner enthalten jeweils die Backlogs für die einzelnen Sprints sowie dazugehörige notwendige bzw. hilfreiche Informationen
 
