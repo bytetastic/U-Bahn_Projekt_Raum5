@@ -35,15 +35,31 @@ class RouteManager:
     """
 
     def __init__(self):
-        # Reihenfolge: Von Fürth nach Langwasser
+        # Exakte Liste gemäß Vorgabe (Index 0 = Langwasser Süd, Index 22 = Fürth Hbf.)
         self.stations = [
-            "Fürth Hardhöhe", "Fürth Klinikum", "Fürth Stadthalle", "Fürth Rathaus",
-            "Fürth Hauptbahnhof", "Jakobinenstraße", "Stadtgrenze", "Muggenhof",
-            "Eberhardshof", "Maximilianstraße", "Bärenschanze", "Gostenhof",
-            "Plärrer", "Weißer Turm", "Lorenzkirche", "Hauptbahnhof",
-            "Aufseßplatz", "Maffeiplatz", "Frankenstraße", "Hasenbuck",
-            "Bauernfeindstraße", "Messe", "Langwasser Nord", "Scharfreiterring",
-            "Langwasser Mitte", "Langwasser Süd"
+            "Langwasser Süd",
+            "Gemeinschaftshaus",
+            "Langwasser Mitte",
+            "Scharfreiterring",
+            "Langwasser Nord",
+            "Messe",
+            "Bauernfeindstraße",
+            "Hasenbuck",
+            "Frankenstraße",
+            "Maffeiplatz",
+            "Aufseßplatz",
+            "Hauptbahnhof",
+            "Lorenzkirche",
+            "Weißer Turm",
+            "Plärrer",
+            "Gostenhof",
+            "Bärenschanze",
+            "Maximilianstraße",
+            "Eberhardshof",
+            "Muggenhof",
+            "Stadtgrenze",
+            "Jakobinenstraße",
+            "Fürth Hbf."
         ]
 
     def find_station(self, user_input):
@@ -69,7 +85,7 @@ class TimetableManager:
 
     def __init__(self, route_mgr):
         self.route_mgr = route_mgr
-        self.hubs = ["Hauptbahnhof", "Plärrer", "Fürth Hauptbahnhof", "Langwasser Süd"]
+        self.hubs = ["Hauptbahnhof", "Plärrer", "Fürth Hbf.", "Langwasser Süd"]
 
     def get_stop_time(self, station_name):
         # 60 Sekunden für Hauptknoten und Endstationen, sonst 30
@@ -80,14 +96,13 @@ class TimetableManager:
         hours, minutes = map(int, wunschzeit_str.split(':'))
         wunsch_sec = hours * 3600 + minutes * 60
 
-        # Richtung (1 = Richtung Langwasser, -1 = Richtung Fürth)
+        # Richtung (1 = Richtung Fürth Hbf., -1 = Richtung Langwasser Süd)
         direction = 1 if start_idx < end_idx else -1
 
-        # 2. Wir suchen den passenden Takt (vereinfacht: Züge fahren ab 05:00 alle 10 Min)
+        # 2. passender Takt (vereinfacht: Züge fahren ab 05:00 alle 10 Min)
         start_of_day_sec = 5 * 3600  # 05:00 Uhr in Sekunden
 
         # Theoretische Abfahrt am Startbahnhof bestimmen
-        # Muss >= wunsch_sec sein UND >= 05:00 Uhr
         if wunsch_sec < start_of_day_sec:
             departure_sec = start_of_day_sec
         else:
@@ -106,7 +121,7 @@ class TimetableManager:
         while current_idx != end_idx:
             # Wir fahren zur nächsten Station
             current_idx += direction
-            # Annahme für die reine Fahrzeit (da wir den echten "Netzplan U1" nicht haben, nehmen wir Durchschnittswerte, ca 105s)
+            # Annahme für die reine Fahrzeit (ca. 105s zwischen Stationen)
             arrival_sec += 105
 
             # Haltezeit addieren (außer an der allerletzten Station der Reise)

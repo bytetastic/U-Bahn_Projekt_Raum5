@@ -5,7 +5,7 @@ from logik import RouteManager, TariffManager, TimetableManager
 
 class TravelApp:
     """
-    Hauptklasse für die Interaktion (User Story 3.3 & Sprint 2)
+    Hauptklasse für die Interaktion
     """
 
     def __init__(self):
@@ -28,10 +28,11 @@ class TravelApp:
         while True:
             time_input = input(prompt_text)
             try:
+                # Prüfen, ob das Format HH:MM stimmt
                 datetime.datetime.strptime(time_input, "%H:%M")
                 return time_input
             except ValueError:
-                print("Fehler: Bitte die Zeit im Format HH:MM eingeben (z.B. 08:35).")
+                print("Fehler: Bitte die Zeit im Format HH:MM eingeben (z.B. 08:35 oder 14:10).")
 
     def run(self):
         print("=== Kurzstrecke Projekt 2 Sprint 3 ===")
@@ -51,9 +52,9 @@ class TravelApp:
         end_idx = self.route_mgr.get_station_index(end_station)
         station_count = abs(end_idx - start_idx)
 
-        richtung = "Richtung Langwasser Süd" if start_idx < end_idx else "Richtung Fürth Hardhöhe"
+        richtung = "Richtung Fürth Hbf." if start_idx < end_idx else "Richtung Langwasser Süd"
 
-        # 3. Fahrplan-Berechnung (SOFORTIGE AUSGABE)
+        # 3. Fahrplan-Berechnung & SOFORTIGE AUSGABE
         dep_rounded, arr_exact, arr_rounded = self.time_mgr.calculate_travel(start_idx, end_idx, wunschzeit)
         print(f"   -> Nächste Abfahrt ab {start_station}: {dep_rounded} Uhr ({richtung})")
 
