@@ -15,7 +15,7 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.1.2** Die Datenstruktur (Graph) bildet alle Linienverläufe des Gesamtnetzes ab.
 * **4.1.3** Die Streckenberechnung liefert korrekte Ergebnisse für Start- und Zielpunkte auf unterschiedlichen Linien.
 
-> Eine Liste mit allen Haltestellen wird vorgelegt
+> Eine Liste mit allen Haltestellen ist in der Datei Netzplan zu finden.
 
 ---
 
