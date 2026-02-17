@@ -28,6 +28,24 @@
  "Ich möchte nach Eingabe meines Ziels sehen, wann ich dort ankomme und was die Fahrt kostet, um Planungssicherheit zu haben."
 
 ---
+
+### User Story 4.1: Verkehrsbetrieb (Kunde)
+**„Die Fahrkartenautomaten arbeiten korrekt für U1. Nun soll das gesamte Netz einbezogen werden.“**
+
+### User Story 4.2: Fahrgast
+**„Da mein Ziel auf einer anderen Linie liegt, muss ich umsteigen. Ich möchte sicher sein, dass ich genug Zeit habe, meinen Anschlusszug zu erreichen.“**
+
+### User Story 4.3: Fahrgast
+**„Ich möchte möglichst schnell ans Ziel kommen. Wenn ich dadurch nicht früher ankomme, bleibe ich lieber sitzen, statt umzusteigen. Der Automat soll mir nur dann einen Umstieg empfehlen, wenn dieser sinnvoll ist.“**
+
+### User Story 4.4: Verkehrsbetrieb (Kunde)
+**„Als Verkehrsbetrieb (Kunde) wünschen wir uns, dass bei der Eingabe der Uhrzeit keine Gedanken zu Trennzeichen oder führenden Nullen notwendig sind.“**
+
+### User Story 4.5: Verkehrsbetrieb (Kunde)
+**„Um eine gleichbleibend hohe Softwarequalität sicherzustellen, möchte der Verkehrsbetrieb (Kunde), dass alle Modullösungen über eine Schnittstelle (Adapter) geprüft werden. Dadurch soll die automatisierte Abnahme effizient, standardisiert und vergleichbar erfolgen.“**
+
+---
+
 ### User Story: Fahrgast
  "Da ich rechtzeitig an meinem Fahrtziel ankommen will, möchte ich die Möglichkeit haben, die Fahrtstrecke nach der Ankunftszeit wählen zu können."
 
