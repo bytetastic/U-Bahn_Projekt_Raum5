@@ -57,6 +57,7 @@ Ziel dieses Sprints ist die fachliche Vervollständigung der Reiseauskunft. Der 
 
 ## Liste der Testfälle für die Abnahme
 
+### Testfälle zu Abnahmekriterium 2.
 | Nr. | Eingabe-Typ                | Benutzereingabe   | Erwartete Ausgabe / Reaktion | Logik-Prüfung                    |
 | :--- |:---------------------------|:------------------| :--- |:---------------------------------|
 | 1 | **exakte Übereinstimmung** | `Messe`           | `Messe` erkannt | Standardfall                     |
@@ -79,3 +80,44 @@ Erläuterung zu Testfall 10 & 12:
     Testfall 10: Da die Eingabe exakt "Hauptbahnhof" lautet, muss das System diesen auch wählen und nicht den "Fürth Hauptbahnhof", da hier ein 100% Match vorliegt.
 
     Testfall 12: Da die U2/U3 noch nicht implementiert sind, muss das System den "Flughafen" als unbekannt ablehnen, um die Integrität der U1-Reiseplanung zu wahren.
+
+### Testfälle zu Abnahmekriterium 3.
+
+| Nr. | Szenario | Start-Haltestelle | Ziel-Haltestelle | Wunschzeit | Erwartete Abfahrt | Erwartete Ankunft exakt | Erwartete Ankunft aufgerundet |
+|:----| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | **Erster Zug (Start)** | Langwasser Süd | Fürth Hbf. | 04:30 | **05:00 Uhr** | 05:59:30 | **06:00** |
+| 2 | **Hauptknoten (Hbf)** | Hauptbahnhof | Plärrer | 08:02 | **08:10 Uhr** | 08:18:00 | **08:18** |
+| 3 | **Richtungswechsel** | Fürth Hbf. | Stadtgrenze | 05:45 | **06:00 Uhr** | 06:06:00 | **06:06** |
+| 4 | **Punktlandung** | Maffeiplatz | Aufseßplatz | 08:35 | **08:35 Uhr** | 08:36:30 | **08:37** |
+| 5 | **Später Abend** | Gostenhof | Eberhardshof | 23:36 | **23:41 Uhr** | 23:47:30 | **23:48** |
+
+
+
+### Testfälle zu Abnahmekriterium 4.
+
+| Nr | Strecke | Start | Ziel | Ticketart | Sozialrabatt | Zahlung | Erwarteter Preis |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Karte | 1,65 € |
+| 2 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Bar | 1,90 € |
+| 3 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Karte | 1,32 € |
+| 4 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Bar | 1,52 € |
+| 5 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Karte | 5,00 € |
+| 6 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Bar | 5,75 € |
+| 7 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Karte | 4,00 € |
+| 8 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Bar | 4,60 € |
+| 9 | mittel | Langwasser Süd | Messe | Einzel | nein | Karte | 2,20 € |
+| 10 | mittel | Langwasser Süd | Messe | Einzel | nein | Bar | 2,53 € |
+| 11 | mittel | Langwasser Süd | Messe | Einzel | ja | Karte | 1,76 € |
+| 12 | mittel | Langwasser Süd | Messe | Einzel | ja | Bar | 2,02 € |
+| 13 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Karte | 7,00 € |
+| 14 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Bar | 8,05 € |
+| 15 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Karte | 5,60 € |
+| 16 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Bar | 6,44 € |
+| 17 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Karte | 3,30 € |
+| 18 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Bar | 3,79 € |
+| 19 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Karte | 2,64 € |
+| 20 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Bar | 3,04 € |
+| 21 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Karte | 10,00 € |
+| 22 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Bar | 11,50 € |
+| 23 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Karte | 8,00 € |
+| 24 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Bar | 9,50 € |
