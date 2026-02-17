@@ -37,6 +37,10 @@ Ziel dieses Sprints ist die fachliche Vervollständigung der Reiseauskunft. Der 
         * Sozialrabatt: -20% auf den Preis.
         * Zahlart-Zuschlag: +15% bei Barzahlung.
 
+**Wichtiger Hinweis zur Preisberechnung**
+
+Die Rabatte bzw. Zuschläge werden zunächst addiert, d.h. bei Einzelticket (+10 %) und Sozialrabatt (-20 %) ergibt sich ein Gesamtrabatt (!) von 10 % (10 % - 20 % = -10 %), also ein Faktor von 0.9, mit dem der Grundpreis (z. B. 1,50 € für die Kurzstrecke) multipliziert wird.
+
 ### User Story 3.3: Fahrgast
 **„Ich möchte nach Eingabe meines Ziels sehen, wann ich dort ankomme und was die Fahrt kostet, um Planungssicherheit zu haben.“**
 
@@ -95,29 +99,29 @@ Erläuterung zu Testfall 10 & 12:
 
 ### Testfälle zu Abnahmekriterium 4.
 
-| Nr | Strecke | Start | Ziel | Ticketart | Sozialrabatt | Zahlung | Erwarteter Preis |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Karte | 1,65 € |
-| 2 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Bar | 1,90 € |
-| 3 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Karte | 1,32 € |
-| 4 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Bar | 1,52 € |
-| 5 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Karte | 5,00 € |
-| 6 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Bar | 5,75 € |
-| 7 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Karte | 4,00 € |
-| 8 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Bar | 4,60 € |
-| 9 | mittel | Langwasser Süd | Messe | Einzel | nein | Karte | 2,20 € |
-| 10 | mittel | Langwasser Süd | Messe | Einzel | nein | Bar | 2,53 € |
-| 11 | mittel | Langwasser Süd | Messe | Einzel | ja | Karte | 1,76 € |
-| 12 | mittel | Langwasser Süd | Messe | Einzel | ja | Bar | 2,02 € |
-| 13 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Karte | 7,00 € |
-| 14 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Bar | 8,05 € |
-| 15 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Karte | 5,60 € |
-| 16 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Bar | 6,44 € |
-| 17 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Karte | 3,30 € |
-| 18 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Bar | 3,79 € |
-| 19 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Karte | 2,64 € |
-| 20 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Bar | 3,04 € |
-| 21 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Karte | 10,00 € |
-| 22 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Bar | 11,50 € |
-| 23 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Karte | 8,00 € |
-| 24 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Bar | 9,50 € |
+| Nr | Strecke | Start | Ziel | Ticketart | Sozialrabatt | Zahlung | Erwarteter Preis | Ausgabe korrekt? |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Karte | 1,65€ | |
+| 2 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | nein | Bar | 1,88€ | |
+| 3 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Karte | 1,35€ | |
+| 4 | kurz | Langwasser Süd | Langwasser Mitte | Einzel | ja | Bar | 1,58€ | |
+| 5 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Karte | 5,00€ | |
+| 6 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | nein | Bar | 5,75€ | |
+| 7 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Karte | 4,00€ | |
+| 8 | kurz | Langwasser Süd | Langwasser Mitte | Mehrfahrt | ja | Bar | 4,75€ | |
+| 9 | mittel | Langwasser Süd | Messe | Einzel | nein | Karte | 2,20€ | |
+| 10 | mittel | Langwasser Süd | Messe | Einzel | nein | Bar | 2,50€ | |
+| 11 | mittel | Langwasser Süd | Messe | Einzel | ja | Karte | 1,80€ | |
+| 12 | mittel | Langwasser Süd | Messe | Einzel | ja | Bar | 2,10€ | |
+| 13 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Karte | 7,00€ | |
+| 14 | mittel | Langwasser Süd | Messe | Mehrfahrt | nein | Bar | 8,05€ | |
+| 15 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Karte | 5,60€ | |
+| 16 | mittel | Langwasser Süd | Messe | Mehrfahrt | ja | Bar | 6,65€ | |
+| 17 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Karte | 3,30€ | |
+| 18 | lang | Langwasser Süd | Hauptbahnhof | Einzel | nein | Bar | 3,75€ | |
+| 19 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Karte | 2,70€ | |
+| 20 | lang | Langwasser Süd | Hauptbahnhof | Einzel | ja | Bar | 3,15€ | |
+| 21 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Karte | 10,00€ | |
+| 22 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | nein | Bar | 11,50€ | |
+| 23 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Karte | 8,00€ | |
+| 24 | lang | Langwasser Süd | Hauptbahnhof | Mehrfahrt | ja | Bar | 9,50€ | |
