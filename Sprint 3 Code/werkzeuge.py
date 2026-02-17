@@ -2,7 +2,7 @@
 
 class TextUtils:
     """
-    Hilfsklasse für Normalisierung und Mapping gemäß User Story 3.1
+    Hilfsklasse für Normalisierung und Mapping
     """
 
     @staticmethod
