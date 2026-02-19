@@ -6,7 +6,7 @@ from werkzeuge import TextUtils
 
 class TariffManager:
     """
-    Behandelt die Preislogik gemäß User Story 3.2
+    Behandelt die Preislogik
     """
 
     def calculate_ticket(self, stations_count, is_multi_ticket, has_social_card, pay_cash):
@@ -31,7 +31,7 @@ class TariffManager:
 
 class RouteManager:
     """
-    Verwaltet die Stationen und die Suche (User Story 3.1)
+    Verwaltet die Stationen und die Suche
     """
 
     def __init__(self):
@@ -64,7 +64,7 @@ class RouteManager:
 
 class TimetableManager:
     """
-    Fahrplan-Logik gemäß Sprint 2 (Reale Fahr- und Haltezeiten)
+    Fahrplan-Logik
     """
 
     def __init__(self, route_mgr):
