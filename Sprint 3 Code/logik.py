@@ -1,11 +1,12 @@
 # logik.py
 import difflib
+import math
 from werkzeuge import TextUtils
 
 
 class TariffManager:
     """
-    Behandelt die Preislogik
+    Behandelt die Preislogik gemäß User Story 3.2
     """
 
     def calculate_ticket(self, stations_count, is_multi_ticket, has_social_card, pay_cash):
@@ -21,7 +22,6 @@ class TariffManager:
 
         price = base_multi if is_multi_ticket else base_single
 
-        # Zuschläge und Rabatte
         if not is_multi_ticket: price *= 1.10
         if has_social_card: price *= 0.80
         if pay_cash: price *= 1.15
@@ -31,35 +31,19 @@ class TariffManager:
 
 class RouteManager:
     """
-    Verwaltet die Stationen und die Suche
+    Verwaltet die Stationen und die Suche (User Story 3.1)
     """
 
     def __init__(self):
-        # Exakte Liste gemäß Vorgabe (Index 0 = Langwasser Süd, Index 22 = Fürth Hbf.)
         self.stations = [
-            "Langwasser Süd",
-            "Gemeinschaftshaus",
-            "Langwasser Mitte",
-            "Scharfreiterring",
-            "Langwasser Nord",
-            "Messe",
-            "Bauernfeindstraße",
-            "Hasenbuck",
-            "Frankenstraße",
-            "Maffeiplatz",
-            "Aufseßplatz",
-            "Hauptbahnhof",
-            "Lorenzkirche",
-            "Weißer Turm",
-            "Plärrer",
-            "Gostenhof",
-            "Bärenschanze",
-            "Maximilianstraße",
-            "Eberhardshof",
-            "Muggenhof",
-            "Stadtgrenze",
-            "Jakobinenstraße",
-            "Fürth Hbf."
+            "Langwasser Süd", "Gemeinschaftshaus", "Langwasser Mitte",
+            "Scharfreiterring", "Langwasser Nord", "Messe",
+            "Bauernfeindstraße", "Hasenbuck", "Frankenstraße",
+            "Maffeiplatz", "Aufseßplatz", "Hauptbahnhof",
+            "Lorenzkirche", "Weißer Turm", "Plärrer",
+            "Gostenhof", "Bärenschanze", "Maximilianstraße",
+            "Eberhardshof", "Muggenhof", "Stadtgrenze",
+            "Jakobinenstraße", "Fürth Hbf."
         ]
 
     def find_station(self, user_input):
@@ -80,72 +64,121 @@ class RouteManager:
 
 class TimetableManager:
     """
-    Fahrplan-Logik gemäß Sprint 2 (10-Min-Takt, Haltezeiten)
+    Fahrplan-Logik gemäß Sprint 2 (Reale Fahr- und Haltezeiten)
     """
 
     def __init__(self, route_mgr):
         self.route_mgr = route_mgr
         self.hubs = ["Hauptbahnhof", "Plärrer", "Fürth Hbf.", "Langwasser Süd"]
 
+        # EXAKTE Fahrzeiten aus dem Netzplan U1 (Minuten in Sekunden umgerechnet)
+        self.segment_times = [
+            180,  # 0: Langwasser Süd -> Gem.haus (3 Min)
+            120,  # 1: Gem.haus -> Langw. Mitte (2 Min)
+            120,  # 2: Langw. Mitte -> Scharfreit. (2 Min)
+            180,  # 3: Scharfreit. -> Langw. Nord (3 Min)
+            120,  # 4: Langw. Nord -> Messe (2 Min)
+            180,  # 5: Messe -> Bauernfeind. (3 Min)
+            120,  # 6: Bauernfeind. -> Hasenbuck (2 Min)
+            120,  # 7: Hasenbuck -> Frankenstr. (2 Min)
+            120,  # 8: Frankenstr. -> Maffeiplatz (2 Min)
+            60,  # 9: Maffeiplatz -> Aufseßplatz (1 Min)
+            120,  # 10: Aufseßplatz -> Hauptbahnhof (2 Min)
+            120,  # 11: Hauptbahnhof -> Lorenzkirche (2 Min)
+            180,  # 12: Lorenzkirche -> Weißer Turm (3 Min)
+            120,  # 13: Weißer Turm -> Plärrer (2 Min)
+            120,  # 14: Plärrer -> Gostenhof (2 Min)
+            60,  # 15: Gostenhof -> Bärenschanze (1 Min)
+            120,  # 16: Bärenschanze -> Maximilian. (2 Min)
+            120,  # 17: Maximilian. -> Eberhardshof (2 Min)
+            120,  # 18: Eberhardshof -> Muggenhof (2 Min)
+            180,  # 19: Muggenhof -> Stadtgrenze (3 Min)
+            120,  # 20: Stadtgrenze -> Jakobinenstr. (2 Min)
+            180  # 21: Jakobinenstr. -> Fürth Hbf. (3 Min)
+        ]
+
+        # Arrays für die vorab berechneten Ankunfts- und Abfahrtszeiten des ALLERERSTEN Zuges
+        self.dep_dir1 = [0] * 23
+        self.arr_dir1 = [0] * 23
+        self.dep_dir2 = [0] * 23
+        self.arr_dir2 = [0] * 23
+
+        self._precompute_schedules()
+
     def get_stop_time(self, station_name):
-        # 60 Sekunden für Hauptknoten und Endstationen, sonst 30
         return 60 if station_name in self.hubs else 30
 
+    def _precompute_schedules(self):
+        # --- RICHTUNG 1: Langwasser (0) -> Fürth (22) ---
+        t = 5 * 3600  # Start um exakt 05:00:00 Uhr
+        self.dep_dir1[0] = t
+        self.arr_dir1[0] = t
+
+        for i in range(22):
+            t += self.segment_times[i]
+            self.arr_dir1[i + 1] = t
+            t += self.get_stop_time(self.route_mgr.stations[i + 1])
+            self.dep_dir1[i + 1] = t
+
+        # --- RICHTUNG 2: Fürth (22) -> Langwasser (0) ---
+        # Der erste Zug aus Langwasser kommt in Fürth an und wendet (60s Halt)
+        # Seine exakte Abfahrt ist somit in self.dep_dir1[22] gespeichert! (06:00:30)
+        t = self.dep_dir1[22]
+        self.dep_dir2[22] = t
+        self.arr_dir2[22] = t
+
+        for i in range(22, 0, -1):
+            t += self.segment_times[i - 1]
+            self.arr_dir2[i - 1] = t
+            t += self.get_stop_time(self.route_mgr.stations[i - 1])
+            self.dep_dir2[i - 1] = t
+
     def calculate_travel(self, start_idx, end_idx, wunschzeit_str):
-        # 1. Wunschzeit parsen (z.B. "08:02" zu Sekunden umwandeln)
         hours, minutes = map(int, wunschzeit_str.split(':'))
         wunsch_sec = hours * 3600 + minutes * 60
 
-        # Richtung (1 = Richtung Fürth Hbf., -1 = Richtung Langwasser Süd)
-        direction = 1 if start_idx < end_idx else -1
-
-        # 2. passender Takt (vereinfacht: Züge fahren ab 05:00 alle 10 Min)
-        start_of_day_sec = 5 * 3600  # 05:00 Uhr in Sekunden
-
-        # Theoretische Abfahrt am Startbahnhof bestimmen
-        if wunsch_sec < start_of_day_sec:
-            departure_sec = start_of_day_sec
+        # Hole die "Muster-Zeiten" des allerersten Zuges des Tages
+        if start_idx < end_idx:
+            base_dep = self.dep_dir1[start_idx]
+            base_arr = self.arr_dir1[end_idx]
         else:
-            # Auf den nächsten 10-Minuten-Takt (600 Sekunden) aufrunden
-            elapsed = wunsch_sec - start_of_day_sec
-            remainder = elapsed % 600
-            if remainder == 0:
-                departure_sec = wunsch_sec
-            else:
-                departure_sec = wunsch_sec + (600 - remainder)
+            base_dep = self.dep_dir2[start_idx]
+            base_arr = self.arr_dir2[end_idx]
 
-        # 3. Ankunftszeit berechnen (Fahrt zum Ziel simulieren)
-        arrival_sec = departure_sec
-        current_idx = start_idx
+        travel_duration = base_arr - base_dep
 
-        while current_idx != end_idx:
-            # Wir fahren zur nächsten Station
-            current_idx += direction
-            # Annahme für die reine Fahrzeit (ca. 105s zwischen Stationen)
-            arrival_sec += 105
+        # Finde den nächsten Taktzyklus (10 Minuten = 600 Sekunden)
+        if wunsch_sec <= base_dep:
+            actual_dep = base_dep
+        else:
+            diff = wunsch_sec - base_dep
+            cycles = math.ceil(diff / 600.0)
+            actual_dep = base_dep + cycles * 600
 
-            # Haltezeit addieren (außer an der allerletzten Station der Reise)
-            if current_idx != end_idx:
-                arrival_sec += self.get_stop_time(self.route_mgr.stations[current_idx])
+        actual_arr = actual_dep + travel_duration
 
-        # 4. Formatierung und Rundung für die Ausgabe
+        # Formatierung (Stunden, Minuten, Sekunden)
         def format_time(total_seconds):
             h = int((total_seconds // 3600) % 24)
-            m = int((total_seconds % 3600) // 60)
+            m = int((total_seconds // 60) % 60)
             s = int(total_seconds % 60)
 
-            # Mathematisches Aufrunden ab 30 Sekunden
+            exact_str = f"{h:02d}:{m:02d}:{s:02d}"
+
+            # Aufrunden für Ankunft
             rounded_m = m + 1 if s >= 30 else m
             rounded_h = h
             if rounded_m == 60:
                 rounded_m = 0
                 rounded_h = (h + 1) % 24
-
-            exact_str = f"{h:02d}:{m:02d}:{s:02d}"
             rounded_str = f"{rounded_h:02d}:{rounded_m:02d}"
-            return exact_str, rounded_str
 
-        dep_exact, dep_rounded = format_time(departure_sec)
-        arr_exact, arr_rounded = format_time(arrival_sec)
+            # Abrunden (Floor) für die Abfahrt (Man will dem Fahrgast keine zu späte Zeit nennen)
+            floored_str = f"{h:02d}:{m:02d}"
 
-        return dep_rounded, arr_exact, arr_rounded
+            return exact_str, rounded_str, floored_str
+
+        dep_exact, dep_rounded, dep_floored = format_time(actual_dep)
+        arr_exact, arr_rounded, arr_floored = format_time(actual_arr)
+
+        return dep_floored, arr_exact, arr_rounded
