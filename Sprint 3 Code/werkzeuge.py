@@ -10,14 +10,14 @@ class TextUtils:
         if not text:
             return ""
 
-        # 1. Mapping (Kürzel ersetzen)
-        text = text.replace("Hbf.", "Hauptbahnhof")
-        text = text.replace("Str.", "Straße")
-        text = text.replace("Fr.-", "Friedrich-")
-
         # 2. Trimmen und Kleinschreibung
         text = text.strip().lower()
 
+        text = text.replace("hbf.", "hauptbahnhof")
+        text = text.replace("hbf", "hauptbahnhof")  # Fängt Eingaben OHNE Punkt ab!
+
+        text = text.replace("str.", "straße")
+        text = text.replace("fr.-", "friedrich-")
         # 3. Vereinheitlichung Sonderzeichen
         text = text.replace("-", " ")
 
