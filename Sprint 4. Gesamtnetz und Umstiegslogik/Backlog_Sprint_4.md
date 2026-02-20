@@ -60,23 +60,33 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.5.2** Der Adapter übersetzt die spezifischen internen Datenstrukturen der Gruppe in das standardisierte Format des zentralen Testskripts.
 * **4.5.3** Das Testskript kann alle automatisierten Testfälle (z. B. aus US 4.1 bis 4.4) ohne manuelle Anpassungen am Gruppen-Code ausführen.
 * **4.5.4** Der Adapter fängt Inkompatibilitäten ab und liefert im Fehlerfall standardisierte Rückmeldungen an die Testumgebung.
-```
 
-Adapter
 
-Eingabe:
-Start-Haltestelle exakt so geschrieben wie vorgegeben: eingabe_start = <Haltestellenname>
-Ziel-Haltestelle ebenso: eingabe_ziel = <Haltestellenname>
-gewünschte Startzeit: eingabe_startzeit = <HHMM> (Verzicht auf Doppelpunkt ist hier bewusst!)
-Fehlermeldung vom Adapter: fehler = True
+### Spezifikation Adapter-Schnittstelle (Datentypen)
 
-Ausgabe:
-Abfahrtzeit für Fahrgast an Starthaltestelle: ausgabe_startzeit = <HH:MM>
-Ankunfzszeit für Fahrgast an Zielhaltestelle: ausgabe_zielzeit = <HH:MM>
-Nennung der Bahnlinien, die auf der Route benutzt werden: bahnlinien_gesamtfahrt = <[U1,...]>
-Fahrtroute, alle angefahrenen Haltestellen und jeweils Abfahrt- und Ankunftszeiten: route = <{"Haltestellename":["Bahnlinie", HH:MM:SS, HH:MM:SS], ...}> --> bei Start und Ziel sind jeweils Abfahrts- und Ankunftszeit identisch
-Angabe der Umstiegshaltestelle(n): umstieg_haltestellen = <["Haltestellenname", ...]>
-Angabe zu Umstiegen auf die Sekunde genau: umstiege_exakt = <{"Haltestellename":[HH:MM:SS, HH:MM:SS], ...}>
-Angabe zu Umstiegen wie an Fahrgast ausgegeben: umstiege_fahrgast = <{"Haltestellename":[HH:MM:SS, HH:MM:SS], ...}>
-Angabe der Bahnlinie bei Umstiegen: umstieg_bahnlinien = <[U1, ...]>
-Gesamtdauer der Fahrt: dauer_gesamtfahrt = <HH:MM:SS>
+#### 1. Eingabe-Parameter (Input)
+| Variable | Datentyp (Python) | Beschreibung |
+| :--- | :--- | :--- |
+| `eingabe_start` | `str` | Name der Start-Haltestelle (exakt laut Netzplan) |
+| `eingabe_ziel` | `str` | Name der Ziel-Haltestelle (exakt laut Netzplan) |
+| `eingabe_startzeit` | `str` | Die vom Nutzer eingegebene Zeit (flexibles Format) |
+| `eingabe_einzelfahrkarte`| `bool` | `True` für Einzelkarte, `False` für Mehrfahrtenkarte |
+| `eingabe_sozialrabatt` | `bool` | `True`, wenn Rabattberechtigung vorliegt |
+| `eingabe_barzahlung` | `bool` | `True` bei Barzahlung, `False` bei Kartenzahlung |
+
+#### 2. Ausgabe-Werte (Output)
+| Variable | Datentyp (Python) | Format / Struktur |
+| :--- | :--- | :--- |
+| `fehler` | `bool` | `True`, wenn Eingabe ungültig oder keine Route gefunden |
+| `ausgabe_startzeit_fahrgast`| `datetime.time` | HH:MM (Sekunden genullt) |
+| `ausgabe_zielzeit_fahrgast` | `datetime.time` | HH:MM (aufgerundet laut Vorgabe) |
+| `ausgabe_startzeit_algo` | `datetime.time` | HH:MM:SS (Präzise Zeit für Berechnung) |
+| `ausgabe_zielzeit_algo` | `datetime.time` | HH:MM:SS (Präzise Zeit für Berechnung) |
+| `bahnlinien_gesamtfahrt` | `List[str]` | `["U1", "U2"]` |
+| `route` | `Dict[str, List]` | `{"Name": [Linie, An_HHMMSS, Ab_HHMMSS], ...}` |
+| `umstieg_haltestellen` | `List[str]` | `["Hauptbahnhof", "Plärrer"]` |
+| `umstiege_exakt` | `Dict[str, List]` | `{"Name": [time_ankunft, time_abfahrt], ...}` |
+| `umstiege_fahrgast` | `Dict[str, List]` | `{"Name": [time_ankunft, time_abfahrt], ...}` |
+| `umstieg_bahnlinien` | `List[str]` | Die Linien, auf die gewechselt wird |
+| `dauer_gesamtfahrt` | `timedelta` | Zeitdifferenz (Python-Typ für Zeitspannen) |
+| `preis_endbetrag` | `float` | Finaler Ticketpreis (z.B. `1.65`) |
