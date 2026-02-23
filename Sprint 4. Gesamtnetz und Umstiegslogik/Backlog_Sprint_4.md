@@ -45,6 +45,7 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 ### Abnahmekriterien US 4.3:
 * **4.3.1** Der Suchalgorithmus bevorzugt bei zeitlich gleichwertigen Verbindungen die Route mit der geringsten Anzahl an Umstiegen.
 * **4.3.2** Die Gesamtfahrzeit wird inklusive der realen Aufenthaltszeiten an den Umstiegsstationen berechnet und ausgegeben.
+* **4.3.3** Bei mehreren möglichen Umstiegen (oft Plärrer und Hbf.) wird immer der erste gewählt, solange das keine spätere Ankunft am Ziel zur Folge hat
 
 ---
 
