@@ -67,11 +67,11 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.5.3** Das Testskript kann alle automatisierten Testfälle (z. B. aus US 4.1 bis 4.4) ohne manuelle Anpassungen am Gruppen-Code ausführen.
 * **4.5.4** Der Adapter fängt Inkompatibilitäten ab und liefert im Fehlerfall standardisierte Rückmeldungen an die Testumgebung.
 
-### Technische Voraussetzung: Umstrukturierung des Gruppencodes
+## 4.6 Technische Voraussetzung für das automatische Testen: Codestruktur
 
 Damit der automatisierte Test funktioniert, muss der Gruppencode strikt zwischen **Logik** (Berechnung) und **Interaktion** (Eingabe) trennen.
 
-#### 1. Aufbau der Logik-Datei (z. B. `berechnung.py`)
+### 4.6.1 Aufbau der Logik-Datei (z. B. `berechnung.py`)
 Die Logik darf keine `input()`-Befehle enthalten. Alle benötigten Werte müssen als **Parameter** entgegengenommen werden.
 
 ```python
@@ -91,10 +91,15 @@ if __name__ == "__main__":
     
     # Aufruf der Logik mit den manuellen Eingaben
     print(berechne_fahrt(s, z, t))
-2. Funktionsweise des Adapters
+´´´
+
+### 4.6.2 Funktionsweise des Adapters
 Der Adapter importiert eure Logik-Datei. Da der input()-Teil unter if __name__ == "__main__" steht, wird er beim Import ignoriert. Das Testskript bleibt nicht hängen.
+
+´´´
 Python
 # So greift der Adapter auf euren Code zu:
+
 from . import berechnung
 
 class adapter_klasse:
@@ -102,11 +107,11 @@ class adapter_klasse:
         # Der Adapter übergibt die Testwerte direkt an eure Funktion
         ergebnis = berechnung.berechne_fahrt(eingabe_start, ...)
         return {"preis_endbetrag": ergebnis, ...}
+´´´
 
+## 4.7 Spezifikation Adapter-Schnittstelle
 
-### Spezifikation Adapter-Schnittstelle (Datentypen)
-
-#### 1. Eingabe-Parameter (Input)
+### 4.7.1 Eingabe-Parameter (Input)
 | Variable | Datentyp (Python) | Beschreibung |
 | :--- | :--- | :--- |
 | `eingabe_start` | `str` | Name der Start-Haltestelle (exakt laut Netzplan) |
@@ -116,7 +121,7 @@ class adapter_klasse:
 | `eingabe_sozialrabatt` | `bool` | `True`, wenn Rabattberechtigung vorliegt |
 | `eingabe_barzahlung` | `bool` | `True` bei Barzahlung, `False` bei Kartenzahlung |
 
-#### 2. Ausgabe-Werte (Output)
+### 5.7.2 Ausgabe-Werte (Output)
 | Variable | Datentyp (Python) | Format / Struktur |
 | :--- | :--- | :--- |
 | `fehler` | `bool` | `True`, wenn Eingabe ungültig oder keine Route gefunden |
@@ -133,8 +138,7 @@ class adapter_klasse:
 | `dauer_gesamtfahrt` | `timedelta` | Zeitdifferenz (Python-Typ für Zeitspannen) |
 | `preis_endbetrag` | `float` | Finaler Ticketpreis (z.B. `1.65`) |
 
-
-#### 3. Struktur der Adapter-Datei
+### 4.7.3 Struktur der Adapter-Datei
 Erstellt in einem Modul `adapter.py` eine Klasse namens `adapter_klasse`. Diese Klasse muss eine zentrale Methode besitzen, die vom Testskript aufgerufen wird. Das Grundgerüst sieht wie folgt aus:
 
 ```python
@@ -183,7 +187,7 @@ class adapter_klasse:
             "preis_endbetrag": 0.0
         }
 ```
-#### 4. Wichtige Implementierungshinweise
+### 4.7.4 Wichtige Implementierungshinweise
 
 * **Schnittstellentreue:** Die Namen der Variablen (Keys) im zurückgegebenen Dictionary müssen exakt so geschrieben werden wie in der Spezifikation oben. Ein Tippfehler führt zum Scheitern des automatisierten Tests.
 * **Zeitformate:**
@@ -192,11 +196,4 @@ class adapter_klasse:
     * Achtet bei der `ausgabe_zielzeit_fahrgast` auf die Rundungsregeln (aufgerundet auf die volle Minute).
 * **Daten-Mapping:** Eure interne Verarbeitung muss in der Lage sein, die String-Eingabe der Haltestellen (z. B. "Langwasser Süd") auf eure interne Datenbank-Struktur abzubilden.
 * **Fehlerbehandlung:** Wenn eine Route nicht gefunden werden kann oder die Eingaben ungültig sind, darf der Adapter nicht abstürzen. Setzt in diesem Fall `fehler = True` und füllt die restlichen Felder mit Standardwerten (0 oder leere Listen).
-
-
-
-#### 5. Bewertungsrelevanz
-
-* **Automatisierte Prüfung:** Der Adapter wird automatisiert gegen die bereitgestellten Test-Tabellen (Preisliste und Fahrplan-Szenarien) geprüft.
-* **Abnahmekriterium:** Ein korrekt funktionierender Adapter, der alle Testfälle valide durchläuft, ist Voraussetzung für die Abnahme der Sprints durch den Kunden.
 
