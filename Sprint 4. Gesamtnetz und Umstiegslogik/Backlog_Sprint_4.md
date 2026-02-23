@@ -67,6 +67,42 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.5.3** Das Testskript kann alle automatisierten Testfälle (z. B. aus US 4.1 bis 4.4) ohne manuelle Anpassungen am Gruppen-Code ausführen.
 * **4.5.4** Der Adapter fängt Inkompatibilitäten ab und liefert im Fehlerfall standardisierte Rückmeldungen an die Testumgebung.
 
+### Technische Voraussetzung: Umstrukturierung des Gruppencodes
+
+Damit der automatisierte Test funktioniert, muss der Gruppencode strikt zwischen **Logik** (Berechnung) und **Interaktion** (Eingabe) trennen.
+
+#### 1. Aufbau der Logik-Datei (z. B. `berechnung.py`)
+Die Logik darf keine `input()`-Befehle enthalten. Alle benötigten Werte müssen als **Parameter** entgegengenommen werden.
+
+```python
+# LOGIK-TEIL (Wird vom Adapter aufgerufen)
+def berechne_fahrt(start_haltestelle, ziel_haltestelle, startzeit):
+    # Hier findet die Berechnung statt
+    # Die Variablen sind hier durch die Parameter definiert
+    ergebnis = ... 
+    return ergebnis
+
+# MANUELLER TEST-TEIL (Wird beim direkten Starten ausgeführt)
+if __name__ == "__main__":
+    # **Nur hier ist input() erlaubt!**
+    s = input("Start: ")
+    z = input("Ziel: ")
+    t = input("Zeit: ")
+    
+    # Aufruf der Logik mit den manuellen Eingaben
+    print(berechne_fahrt(s, z, t))
+2. Funktionsweise des Adapters
+Der Adapter importiert eure Logik-Datei. Da der input()-Teil unter if __name__ == "__main__" steht, wird er beim Import ignoriert. Das Testskript bleibt nicht hängen.
+Python
+# So greift der Adapter auf euren Code zu:
+from . import berechnung
+
+class adapter_klasse:
+    def ausfuehren_testfall(self, eingabe_start, ...):
+        # Der Adapter übergibt die Testwerte direkt an eure Funktion
+        ergebnis = berechnung.berechne_fahrt(eingabe_start, ...)
+        return {"preis_endbetrag": ergebnis, ...}
+
 
 ### Spezifikation Adapter-Schnittstelle (Datentypen)
 
