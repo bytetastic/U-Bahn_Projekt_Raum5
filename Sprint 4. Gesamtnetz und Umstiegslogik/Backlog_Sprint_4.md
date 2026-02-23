@@ -69,8 +69,9 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.5.3** Das Testskript kann alle automatisierten Testfälle (z. B. aus US 4.1 bis 4.4) ohne manuelle Anpassungen am Gruppen-Code ausführen.
 * **4.5.4** Der Adapter fängt Inkompatibilitäten ab und liefert im Fehlerfall standardisierte Rückmeldungen an die Testumgebung.
 
-## 4.6 Technische Voraussetzung für das automatische Testen: Codestruktur
+---
 
+## 4.6 Technische Voraussetzung für das automatische Testen: Codestruktur
 Damit der automatisierte Test funktioniert, muss der Gruppencode strikt zwischen **Logik** (Berechnung) und **Interaktion** (Eingabe) trennen.
 
 ### 4.6.1 Aufbau der Logik-Datei (z. B. `berechnung.py`)
@@ -110,6 +111,8 @@ class adapter_klasse:
         ergebnis = berechnung.berechne_fahrt(eingabe_start, ...)
         return {"preis_endbetrag": ergebnis, ...}
 ```
+
+---
 
 ## 4.7 Spezifikation Adapter-Schnittstelle
 
@@ -189,7 +192,10 @@ class adapter_klasse:
             "preis_endbetrag": 0.0
         }
 ```
-### 4.7.4 Wichtige Implementierungshinweise
+
+---
+
+## 4.8 Wichtige Implementierungshinweise
 
 * **Schnittstellentreue:** Die Namen der Variablen (Keys) im zurückgegebenen Dictionary müssen exakt so geschrieben werden wie in der Spezifikation oben. Ein Tippfehler führt zum Scheitern des automatisierten Tests.
 * **Zeitformate:**
