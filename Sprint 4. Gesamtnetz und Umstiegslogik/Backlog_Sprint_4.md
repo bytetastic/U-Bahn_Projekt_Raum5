@@ -29,7 +29,9 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.2.2** Die Umstiegslogik berücksichtigt eine definierte Mindestumstiegszeit (Puffer) zwischen Ankunft und Abfahrt.
 * **4.2.3** Bei der Routenausgabe werden die Abfahrtszeiten der Anschlusszüge an den Knotenpunkten korrekt angezeigt.
 
-> Die Abfahrten erfolgen bei Linien U2 und U3 wie bei U1: Um 5 Uhr fährt die erste Bahn von der Heimhaltestelle der Linie ab. Bis 23 Uhr fährt alle 10 Minuten eine Bahn bis zur Endhaltestelle und dann wieder zurück zur Heimhaltestelle. Die letzte Abfahrt an der Heimhaltestelle erfolgt um 23 Uhr.
+> Die Mindestzeit für den Umstieg, die in der Routenberechnung mit einbezogen werden soll, beträgt 5 min an den Hauptumstiegspunkten (Hauptbahnhof und Plärrer) und 3 min an allen anderen Haltestellen.
+>
+>  Die Abfahrten erfolgen bei Linien U2 und U3 wie bei U1: Um 5 Uhr fährt die erste Bahn von der Heimhaltestelle der Linie ab. Bis 23 Uhr fährt alle 10 Minuten eine Bahn bis zur Endhaltestelle und dann wieder zurück zur Heimhaltestelle. Die letzte Abfahrt an der Heimhaltestelle erfolgt um 23 Uhr.
 > 
 > Heimhaltestellen:
 > U2: Röthenbach
