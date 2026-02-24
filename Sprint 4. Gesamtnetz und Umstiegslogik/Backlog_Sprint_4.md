@@ -29,7 +29,9 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.2.2** Die Umstiegslogik berücksichtigt eine definierte Mindestumstiegszeit (Puffer) zwischen Ankunft und Abfahrt.
 * **4.2.3** Bei der Routenausgabe werden die Abfahrtszeiten der Anschlusszüge an den Knotenpunkten korrekt angezeigt.
 
-> Die Abfahrten erfolgen bei Linien U2 und U3 wie bei U1: Um 5 Uhr fährt die erste Bahn von der Heimhaltestelle der Linie ab. Bis 23 Uhr fährt alle 10 Minuten eine Bahn bis zur Endhaltestelle und dann wieder zurück zur Heimhaltestelle. Die letzte Abfahrt an der Heimhaltestelle erfolgt um 23 Uhr.
+> Die Mindestzeit für den Umstieg, die in der Routenberechnung mit einbezogen werden soll, beträgt 5 min an den Hauptumstiegspunkten (Hauptbahnhof und Plärrer) und 3 min an allen anderen Haltestellen.
+>
+>  Die Abfahrten erfolgen bei Linien U2 und U3 wie bei U1: Um 5 Uhr fährt die erste Bahn von der Heimhaltestelle der Linie ab. Bis 23 Uhr fährt alle 10 Minuten eine Bahn bis zur Endhaltestelle und dann wieder zurück zur Heimhaltestelle. Die letzte Abfahrt an der Heimhaltestelle erfolgt um 23 Uhr.
 > 
 > Heimhaltestellen:
 > U2: Röthenbach
@@ -43,6 +45,7 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 ### Abnahmekriterien US 4.3:
 * **4.3.1** Der Suchalgorithmus bevorzugt bei zeitlich gleichwertigen Verbindungen die Route mit der geringsten Anzahl an Umstiegen.
 * **4.3.2** Die Gesamtfahrzeit wird inklusive der realen Aufenthaltszeiten an den Umstiegsstationen berechnet und ausgegeben.
+* **4.3.3** Bei mehreren möglichen Umstiegen (oft Plärrer und Hbf.) wird immer der erste gewählt, solange das keine spätere Ankunft am Ziel zur Folge hat
 
 ---
 
@@ -67,8 +70,9 @@ Der wesentliche Schwerpunkt im Sprint ist die Implementierung der Logik für den
 * **4.5.3** Das Testskript kann alle automatisierten Testfälle (z. B. aus US 4.1 bis 4.4) ohne manuelle Anpassungen am Gruppen-Code ausführen.
 * **4.5.4** Der Adapter fängt Inkompatibilitäten ab und liefert im Fehlerfall standardisierte Rückmeldungen an die Testumgebung.
 
-## 4.6 Technische Voraussetzung für das automatische Testen: Codestruktur
+---
 
+## 4.6 Technische Voraussetzung für das automatische Testen: Codestruktur
 Damit der automatisierte Test funktioniert, muss der Gruppencode strikt zwischen **Logik** (Berechnung) und **Interaktion** (Eingabe) trennen.
 
 ### 4.6.1 Aufbau der Logik-Datei (z. B. `berechnung.py`)
@@ -108,6 +112,8 @@ class adapter_klasse:
         ergebnis = berechnung.berechne_fahrt(eingabe_start, ...)
         return {"preis_endbetrag": ergebnis, ...}
 ```
+
+---
 
 ## 4.7 Spezifikation Adapter-Schnittstelle
 
@@ -187,7 +193,10 @@ class adapter_klasse:
             "preis_endbetrag": 0.0
         }
 ```
-### 4.7.4 Wichtige Implementierungshinweise
+
+---
+
+## 4.8 Wichtige Implementierungshinweise
 
 * **Schnittstellentreue:** Die Namen der Variablen (Keys) im zurückgegebenen Dictionary müssen exakt so geschrieben werden wie in der Spezifikation oben. Ein Tippfehler führt zum Scheitern des automatisierten Tests.
 * **Zeitformate:**
